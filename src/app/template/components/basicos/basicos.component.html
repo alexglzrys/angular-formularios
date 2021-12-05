@@ -2,12 +2,20 @@
 <hr>
 <div class="row">
   <div class="col">
-    <form>
+    <!-- #miFormularioBasico="ngForm" es una referencia hacia nuestro formulario, que nos permite conocer su estado.
+      la cual está asociada con un formularios de Angular basados en template (ngForm)
+
+    Un formulario basado en template, la mayor parte de su configuración se hace del lado del html-->
+    <form (ngSubmit)="guardar(miFormularioBasico)"
+      #miFormularioBasico="ngForm"
+      autocomplete="off">
       <!-- Campo producto -->
       <div class="mb-3 row">
         <label class="col-sm-3 col-form-label" for="producto">Producto</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" id="producto" placeholder="Nombre del producto">
+          <!-- ngModel: especifica que este campo formará parte de este formulario basado en Template
+          name: su valor será considerado como la propiedad del modelo asociado a este campo -->
+          <input type="text" class="form-control" name="producto" id="producto" ngModel placeholder="Nombre del producto" required>
           <span class="form-text text-danger">Debe ser de al menos 3 caracteres</span>
         </div>
       </div>
@@ -15,14 +23,14 @@
       <div class="mb-3 row">
         <label class="col-sm-3 col-form-label" for="precio">Precio</label>
         <div class="col-sm-9">
-          <input type="number" class="form-control" id="precio" placeholder="Precio del producto">
+          <input type="number" class="form-control" name="precio" id="precio" ngModel placeholder="Precio del producto" required min="0">
         </div>
       </div>
       <!-- Campo existencias -->
       <div class="mb-3 row">
         <label class="col-sm-3 col-form-label" for="existencias">Existencias</label>
         <div class="col-sm-9">
-          <input type="number" class="form-control" id="existencias" placeholder="Existencias del producto">
+          <input type="number" class="form-control" name="existencias" id="existencias" ngModel placeholder="Existencias del producto">
         </div>
       </div>
       <!-- Botón de enviar -->
@@ -32,5 +40,14 @@
         </div>
       </div>
     </form>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <p>Valido: {{ miFormularioBasico.valid }}</p>
+    <span></span>
+    <p>Valores</p>
+    <pre>{{ miFormularioBasico.value | json }}</pre>
   </div>
 </div>

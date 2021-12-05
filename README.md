@@ -36,9 +36,9 @@ const routes: Routes = [
 
 ## Formularios basados en Template
 
-La mayor parte de la lógica se encuentra declarada en el Template (vista del componente)
+La mayor parte de la lógica o configuración se encuentra declarada en el Template (vista del componente)
 
 - Angular se encarga de manejar la mayor parte del formulario de forma automática
 - Se recomienda para formularios simples
-
+- Se requiere importar el módulo de **FormsModule**
 

@@ -5,6 +5,7 @@ import { TemplateRoutingModule } from './template-routing.module';
 import { BasicosComponent } from './components/basicos/basicos.component';
 import { DinamicosComponent } from './components/dinamicos/dinamicos.component';
 import { SwitchesComponent } from './components/switches/switches.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { SwitchesComponent } from './components/switches/switches.component';
   ],
   imports: [
     CommonModule,
+    FormsModule,  // Necesario para trabajar con Formularios basados en Template
     TemplateRoutingModule
   ]
 })
