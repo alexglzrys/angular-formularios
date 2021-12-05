@@ -19,9 +19,24 @@ export class BasicosComponent implements OnInit {
   }
 
   // Validación de controles de formulario por aproximación de funciones
-  productoValido() {
-    // Los formularios basados en template se crean cuando el elemento es renderizado. Por tanto, es normal que algunos de los valores que guardan sus propiedades no esté listas. Por eso, se sugiere el uso de ?
-    return this.miFormulario?.controls.producto?.invalid && this.miFormulario?.controls.producto?.touched
+  productoValido(): boolean {
+    // Los formularios basados en template se crean cuando el elemento es renderizado.
+    // Por tanto, es normal que algunos de los valores que guardan sus propiedades no esté listas. Por eso, se sugiere el uso de ?
+    return this.miFormulario?.controls.producto?.invalid &&
+           this.miFormulario?.controls.producto?.touched;
+  }
+
+  // Validar que campo precio tenga como mínimo la cantidad establecida en minlength
+  precioInvalido(): boolean {
+    return this.miFormulario?.controls.precio?.invalid &&
+           this.miFormulario?.controls.precio?.touched &&
+           this.miFormulario?.controls.precio?.errors?.min;
+  }
+  // Validar que el campo precio tenga un valor establecido
+  precioRequerido(): boolean {
+    return this.miFormulario?.controls.precio?.invalid &&
+           this.miFormulario?.controls.precio?.touched &&
+           this.miFormulario?.controls.precio?.errors?.required;
   }
 
   guardar() {

@@ -24,7 +24,10 @@
       <div class="mb-3 row">
         <label class="col-sm-3 col-form-label" for="precio">Precio</label>
         <div class="col-sm-9">
-          <input type="number" class="form-control" name="precio" id="precio" ngModel placeholder="Precio del producto" required min="0">
+          <input type="number" class="form-control" name="precio" id="precio" ngModel placeholder="Precio del producto" required min="10">
+          <!-- Controlar dos validaciones. Requerido y cantidad mínima -->
+          <span class="form-text text-danger" *ngIf="precioInvalido()">El precio debe ser de al menos $10 pesos</span>
+          <span class="form-text text-danger" *ngIf="precioRequerido()">El precio es un dato requerido</span>
         </div>
       </div>
       <!-- Campo existencias -->
@@ -37,7 +40,8 @@
       <!-- Botón de enviar -->
       <div class="row mt-4">
         <div class="col">
-          <button type="submit" class="btn btn-primary float-end">Registrar</button>
+          <!-- Habilitar el botón de envio solamente si el formulario es válido -->
+          <button type="submit" class="btn btn-primary float-end" [disabled]="miFormularioBasico.invalid">Registrar</button>
         </div>
       </div>
     </form>
