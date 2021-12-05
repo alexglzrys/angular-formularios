@@ -6,7 +6,7 @@
       la cual está asociada con un formularios de Angular basados en template (ngForm)
 
     Un formulario basado en template, la mayor parte de su configuración se hace del lado del html-->
-    <form (ngSubmit)="guardar(miFormularioBasico)"
+    <form (ngSubmit)="guardar()"
       #miFormularioBasico="ngForm"
       autocomplete="off">
       <!-- Campo producto -->
@@ -16,13 +16,8 @@
           <!-- ngModel: especifica que este campo formará parte de este formulario basado en Template
           name: su valor será considerado como la propiedad del modelo asociado a este campo -->
           <input type="text" class="form-control" name="producto" id="producto" ngModel placeholder="Nombre del producto" minlength="3">
-          <!-- Los mensajes de validación se deberían mostrar una vez que se detecte que el valor es inválido y que se haya tacado el formulario
-          Los formularios basados en template se crean cuando el elemento es renderizado.
-          Por tanto, es normal que algunos de los valores que guardan sus propiedades no esté listas. Por eso, se sugiere el uso de ?  -->
-          <span class="form-text text-danger"
-            *ngIf="miFormularioBasico.controls.producto?.invalid && miFormularioBasico.controls.producto?.touched">
-            Debe ser de al menos 3 caracteres
-          </span>
+          <!-- Los mensajes de validación se deberían mostrar una vez que se detecte que el valor es inválido y que se haya tacado el formulario -->
+          <span class="form-text text-danger" *ngIf="productoValido()">Debe ser de al menos 3 caracteres</span>
         </div>
       </div>
       <!-- Campo precio -->

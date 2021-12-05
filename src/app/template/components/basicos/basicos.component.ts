@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -9,17 +9,25 @@ import { NgForm } from '@angular/forms';
 })
 export class BasicosComponent implements OnInit {
 
+  // Guardar una referencia de mi control de formulario, en esta la clase del componente.
+  // De esta forma puedo traer cierta lógica usada en la vista y manejarla desde algún método de esta clase
+  @ViewChild('miFormularioBasico', {static: false}) miFormulario!: NgForm
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  // Se pasa como parámetro la referencia hacia el formulario. Incluye: estado, valores, entre otros
-  guardar(miFormulario: NgForm) {
+  // Validación de controles de formulario por aproximación de funciones
+  productoValido() {
+    // Los formularios basados en template se crean cuando el elemento es renderizado. Por tanto, es normal que algunos de los valores que guardan sus propiedades no esté listas. Por eso, se sugiere el uso de ?
+    return this.miFormulario?.controls.producto?.invalid && this.miFormulario?.controls.producto?.touched
+  }
 
+  guardar() {
     // No se requiere prevenir el comportamiento por defecto, ya que al importar el módulo FormsModulo, automáticamente angular gestiona el comportamiento
-    console.log(miFormulario)
-    console.log(miFormulario.value)
+    console.log(this.miFormulario)
+    console.log(this.miFormulario.value)
   }
 
 }
