@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
+import { RouterModule } from '@angular/router';
 
 /**
  * Módulo que agrupa Componentes, Direcitvas, Pipes, etc.
@@ -13,6 +14,7 @@ import { SidemenuComponent } from './sidemenu/sidemenu.component';
   ],
   imports: [
     CommonModule,
+    RouterModule, // Los componentes de este módulo harán uso de las directivas (routerLink, routerLinkActive)
   ],
   // Listado de elementos compartidos
   exports: [
