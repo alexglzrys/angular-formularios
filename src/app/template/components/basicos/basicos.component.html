@@ -15,8 +15,14 @@
         <div class="col-sm-9">
           <!-- ngModel: especifica que este campo formará parte de este formulario basado en Template
           name: su valor será considerado como la propiedad del modelo asociado a este campo -->
-          <input type="text" class="form-control" name="producto" id="producto" ngModel placeholder="Nombre del producto" required>
-          <span class="form-text text-danger">Debe ser de al menos 3 caracteres</span>
+          <input type="text" class="form-control" name="producto" id="producto" ngModel placeholder="Nombre del producto" minlength="3">
+          <!-- Los mensajes de validación se deberían mostrar una vez que se detecte que el valor es inválido y que se haya tacado el formulario
+          Los formularios basados en template se crean cuando el elemento es renderizado.
+          Por tanto, es normal que algunos de los valores que guardan sus propiedades no esté listas. Por eso, se sugiere el uso de ?  -->
+          <span class="form-text text-danger"
+            *ngIf="miFormularioBasico.controls.producto?.invalid && miFormularioBasico.controls.producto?.touched">
+            Debe ser de al menos 3 caracteres
+          </span>
         </div>
       </div>
       <!-- Campo precio -->
@@ -47,7 +53,14 @@
   <div class="col">
     <p>Valido: {{ miFormularioBasico.valid }}</p>
     <span></span>
+
     <p>Valores</p>
     <pre>{{ miFormularioBasico.value | json }}</pre>
+
+    <p>Pristine (no se ha manipulado sus valores)</p>
+    <pre>{{ miFormularioBasico.pristine | json }}</pre>
+
+    <p>Touched (Ya se hizo clic en alguno de sus campos)</p>
+    <pre>{{ miFormularioBasico.touched | json }}</pre>
   </div>
 </div>
