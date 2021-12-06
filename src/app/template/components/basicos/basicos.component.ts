@@ -13,6 +13,15 @@ export class BasicosComponent implements OnInit {
   // De esta forma puedo traer cierta lógica usada en la vista y manejarla desde algún método de esta clase
   @ViewChild('miFormularioBasico', {static: false}) miFormulario!: NgForm
 
+  // Si se desea que el formulario inicie con algunos valores por defecto, se require establecer un modelo con valores iniciales
+  // y proceder a vincularlo como valor del ngModel de cada campo
+  // [(ngModel)]="modelInit.producto"
+  modelInit = {
+    producto: 'RTX 400 TI',
+    precio: 19500,
+    existencias: 5
+  }
+
   constructor() { }
 
   ngOnInit(): void {
@@ -51,6 +60,15 @@ export class BasicosComponent implements OnInit {
     // No se requiere prevenir el comportamiento por defecto, ya que al importar el módulo FormsModulo, automáticamente angular gestiona el comportamiento
     console.log(this.miFormulario)
     console.log(this.miFormulario.value)
+
+    // Resetear formulario
+    // this.miFormulario.resetForm()
+
+    // Resetear formulario con valores por defecto
+    this.miFormulario.resetForm({
+      existencias: 0,
+      precio: 0
+    })
   }
 
 }
