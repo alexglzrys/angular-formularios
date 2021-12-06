@@ -34,7 +34,12 @@
       <div class="mb-3 row">
         <label class="col-sm-3 col-form-label" for="existencias">Existencias</label>
         <div class="col-sm-9">
-          <input type="number" class="form-control" name="existencias" id="existencias" ngModel placeholder="Existencias del producto">
+          <!-- Especificar una directiva personalizada para controlar la validación de este control de formulario -->
+          <input type="number" class="form-control"
+                 name="existencias" id="existencias"
+                 ngModel customMin [minimo]="20"
+                 placeholder="Existencias del producto">
+          <span class="form-text text-danger" *ngIf="existenciasInvalidas()">Las existencias debe ser de al menos 20 unidades</span>
         </div>
       </div>
       <!-- Botón de enviar -->
@@ -61,5 +66,8 @@
 
     <p>Touched (Ya se hizo clic en alguno de sus campos)</p>
     <pre>{{ miFormularioBasico.touched | json }}</pre>
+
+    <p>customMin (existencias mínimas correctas)</p>
+    <pre>{{ miFormularioBasico.controls?.existencias?.errors | json }}</pre>
   </div>
 </div>

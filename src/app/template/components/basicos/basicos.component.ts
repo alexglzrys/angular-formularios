@@ -39,6 +39,14 @@ export class BasicosComponent implements OnInit {
            this.miFormulario?.controls.precio?.errors?.required;
   }
 
+  // Validar que el campo existencias tenga un valor correcto (minimo 20 unidades) - Directiva personalizada
+  existenciasInvalidas(): boolean {
+    // La directiva personalizada lanza un objeto con la propiedad "{customMin: true}" si no pasa la validación el control de formulario
+    return this.miFormulario?.controls.existencias?.invalid &&
+           this.miFormulario?.controls.existencias?.touched &&
+           this.miFormulario?.controls.existencias?.errors?.customMin;
+  }
+
   guardar() {
     // No se requiere prevenir el comportamiento por defecto, ya que al importar el módulo FormsModulo, automáticamente angular gestiona el comportamiento
     console.log(this.miFormulario)
