@@ -36,4 +36,8 @@ export class DinamicosComponent implements OnInit {
     console.log('Posteado')
   }
 
+  eliminar(index: number) {
+    this.persona.favoritos.splice(index, 1)
+  }
+
 }

@@ -23,12 +23,12 @@
   <div class="row mb-3">
     <label class="col-sm-3 col-form-label">Favoritos</label>
     <div class="col-sm-9">
-      <!-- En formularios dinámicos, es importante que todos los controles tengan un name diferente -->
-      <input *ngFor="let juego of persona.favoritos; let i = index"
-        type="text" [(ngModel)]="juego.nombre"
-        name="favorito_{{ i }}"
-        required
-        class="form-control mb-4">
+      <div *ngFor="let juego of persona.favoritos; let i = index" class="input-group mb-3">
+        <!-- En formularios dinámicos, es importante que todos los controles tengan un name diferente -->
+        <input type="text" [(ngModel)]="juego.nombre" name="favorito_{{ i }}" required class="form-control">
+        <button class="btn btn-outline-danger" type="button" (click)="eliminar(i)">Eliminar</button>
+      </div>
+
     </div>
   </div>
   <!-- Botón enviar -->
