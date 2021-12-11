@@ -5,6 +5,7 @@ import { ReactiveRoutingModule } from './reactive-routing.module';
 import { BasicosComponent } from './components/basicos/basicos.component';
 import { DinamicosComponent } from './components/dinamicos/dinamicos.component';
 import { SwitchesComponent } from './components/switches/switches.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { SwitchesComponent } from './components/switches/switches.component';
   ],
   imports: [
     CommonModule,
-    ReactiveRoutingModule
+    ReactiveRoutingModule,
+    ReactiveFormsModule,  // Módulo necesario para trabajar con formularios reactivos
   ]
 })
 export class ReactiveModule { }

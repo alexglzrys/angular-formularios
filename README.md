@@ -47,3 +47,4 @@ La mayor parte de la lógica o configuración se encuentra declarada en el Templ
 - El template es lo más limpio posible
 - Toda la lógica reside en el lado de TypeScript (Clase del componente)
 - Permiten gestionar formularios complejos, puesto que se tiene el control del lado del código
+- Se requiere importar el módulo de **ReactiveFormsModule**
