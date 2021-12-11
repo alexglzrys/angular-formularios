@@ -1,6 +1,6 @@
 <h2>Template: <small>Dinámicos</small></h2>
 <hr>
-<form (ngSubmit)="guardar()" #miFormulario="ngForm" autocomplete="off">
+<form  #miFormulario="ngForm" autocomplete="off">
   <!-- Nombre -->
   <div class="row mb-3">
     <label class="col-sm-3 col-form-label">Nombre</label>
@@ -14,7 +14,7 @@
     <label class="col-sm-3 col-form-label">Agregar</label>
     <div class="col-sm-9">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" name="nuevo_juego" [(ngModel)]="nuevo_juego" placeholder="Agregar favorito">
+        <input type="text" class="form-control" name="nuevo_juego" [(ngModel)]="nuevo_juego" placeholder="Agregar favorito"(keyup.enter)="agregarJuego()">
         <button class="btn btn-outline-primary" type="button" (click)="agregarJuego()">Agregar</button>
       </div>
     </div>
@@ -34,7 +34,9 @@
   <!-- Botón enviar -->
   <div class="row">
     <div class="col-sm-12">
-      <button class="btn btn-primary float-end" type="submit" [disabled]="miFormulario.invalid">Guardar</button>
+      <!-- Usar submit hace que el formulario se envie tambien cuando sucede el evento keyup.enter
+      lo que genera conflicto con controles que esten escuchando exclusivamente ese evento. -->
+      <button class="btn btn-primary float-end" type="button" (click)="guardar()" [disabled]="miFormulario.invalid">Guardar</button>
     </div>
   </div>
 </form>
