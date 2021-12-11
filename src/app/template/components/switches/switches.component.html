@@ -1,1 +1,49 @@
-<p>switches works!</p>
+<h2>Template: <span>Switches</span></h2>
+<hr>
+<form #miFormulario="ngForm">
+  <!-- Radio - Género -->
+  <div class="row mb-3">
+    <label class="col-sm-3 col-form-label">Género</label>
+    <div class="col-sm-9">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="genero" id="rdoMasculino">
+        <label class="form-check-label" for="rdoMasculino">
+          Masculino
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="genero" id="rdoFemenino">
+        <label class="form-check-label" for="rdoFemenino">
+          Femenino
+        </label>
+      </div>
+    </div>
+  </div>
+  <!-- Switch - Notificaciones -->
+  <div class="row mb-3">
+    <label class="col-sm-3 col-form-label">Notificaciones</label>
+    <div class="col-sm-9">
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" name="notificaciones" id="notificaciones">
+        <label class="form-check-label" for="notificaciones">Quiero recibir notifiaciones</label>
+      </div>
+    </div>
+  </div>
+  <!-- Radio - Términos y condiciones -->
+  <div class="row mb-3">
+    <label class="col-sm-3 col-form-label"></label>
+    <div class="col-sm-9">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="terminos_y_condiciones" id="terms">
+        <label class="form-check-label" for="terms">
+          Acepto los términos y condiciones
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <button class="btn btn-primary float-end">Guardar</button>
+    </div>
+  </div>
+</form>
