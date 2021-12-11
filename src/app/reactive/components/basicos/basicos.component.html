@@ -8,7 +8,8 @@
       <div class="mb-3 row">
         <label class="col-sm-3 col-form-label" for="producto">Producto</label>
         <div class="col-sm-9">
-          <!-- formControlName: Permite vincular este control con alguno de los campos declarados en el esquema de nuestro formulario reactivo -->
+          <!-- formControlName: Permite vincular este control con alguno de los campos declarados en el esquema de nuestro formulario reactivo.
+          Las validaciónes van del lado de la clase del componente -->
           <input type="text" class="form-control" id="producto" formControlName="nombre" placeholder="Nombre del producto" >
           <span class="form-text text-danger">Debe ser de al menos 3 caracteres</span>
         </div>
@@ -33,7 +34,7 @@
       <!-- Botón de enviar -->
       <div class="row mt-4">
         <div class="col">
-          <button type="submit" class="btn btn-primary float-end" >Registrar</button>
+          <button type="submit" class="btn btn-primary float-end" [disabled]="miFormularioBasico.invalid">Registrar</button>
         </div>
       </div>
     </form>

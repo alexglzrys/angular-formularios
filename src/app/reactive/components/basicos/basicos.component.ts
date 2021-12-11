@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-basicos',
@@ -21,9 +21,10 @@ export class BasicosComponent implements OnInit {
   // Estructura para formularios reactivos Complejos en estructura
   // Es necesario inyectar el servicio de FormBuilder para proceder a construir la estructura de nuestro formulario
   miFormularioBasico: FormGroup = this.fb.group({
-    nombre: ['RTX 4080ti'],
-    precio: [15200],
-    existencias: [4]
+    // Especifiar controles, valores por defecto, y validación (arreglo si es más de una validación)
+    nombre: ['RTX 4080ti', [Validators.required, Validators.minLength(3)]],
+    precio: [15200, [Validators.required, Validators.min(0)]],
+    existencias: [4, [Validators.required, Validators.min(1)]]
   })
 
   // Inyectar servicio de FormBuilder
