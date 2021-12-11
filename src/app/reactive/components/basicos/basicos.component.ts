@@ -22,15 +22,21 @@ export class BasicosComponent implements OnInit {
   // Es necesario inyectar el servicio de FormBuilder para proceder a construir la estructura de nuestro formulario
   miFormularioBasico: FormGroup = this.fb.group({
     // Especifiar controles, valores por defecto, y validación (arreglo si es más de una validación)
-    nombre: ['RTX 4080ti', [Validators.required, Validators.minLength(3)]],
-    precio: [15200, [Validators.required, Validators.min(0)]],
-    existencias: [4, [Validators.required, Validators.min(1)]]
+    nombre: [ , [Validators.required, Validators.minLength(3)]],
+    precio: [ , [Validators.required, Validators.min(10)]],
+    existencias: [ , [Validators.required, Validators.min(20)]]
   })
 
   // Inyectar servicio de FormBuilder
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
+  }
+
+  campoEsValido(campo: string, typeValidation: string) {
+    // Validar que el campo de formulario pasado como parámetro no tenga errores y que no haya sido tocado
+    // Así como especificar que tipo de validación se debe inspeccionar
+    return ((this.miFormularioBasico.controls[campo].errors?.[typeValidation]) && this.miFormularioBasico.controls[campo].touched);
   }
 
 }

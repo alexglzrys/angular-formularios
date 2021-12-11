@@ -11,7 +11,8 @@
           <!-- formControlName: Permite vincular este control con alguno de los campos declarados en el esquema de nuestro formulario reactivo.
           Las validaciónes van del lado de la clase del componente -->
           <input type="text" class="form-control" id="producto" formControlName="nombre" placeholder="Nombre del producto" >
-          <span class="form-text text-danger">Debe ser de al menos 3 caracteres</span>
+          <span class="form-text text-danger" *ngIf="campoEsValido('nombre', 'required')">El nombre es un dato requerido</span>
+          <span class="form-text text-danger" *ngIf="campoEsValido('nombre', 'minlength')">Debe ser de al menos 3 caracteres</span>
         </div>
       </div>
       <!-- Campo precio -->
@@ -19,8 +20,8 @@
         <label class="col-sm-3 col-form-label" for="precio">Precio</label>
         <div class="col-sm-9">
           <input type="number" class="form-control" id="precio" formControlName="precio" placeholder="Precio del producto" >
-          <span class="form-text text-danger" >El precio debe ser de al menos $10 pesos</span>
-          <span class="form-text text-danger" >El precio es un dato requerido</span>
+          <span class="form-text text-danger" *ngIf="campoEsValido('precio', 'min')">El precio debe ser de al menos $10 pesos</span>
+          <span class="form-text text-danger" *ngIf="campoEsValido('precio', 'required')">El precio es un dato requerido</span>
         </div>
       </div>
       <!-- Campo existencias -->
@@ -28,7 +29,8 @@
         <label class="col-sm-3 col-form-label" for="existencias">Existencias</label>
         <div class="col-sm-9">
           <input type="number" class="form-control"id="existencias" formControlName="existencias" placeholder="Existencias del producto">
-          <span class="form-text text-danger">Las existencias debe ser de al menos 20 unidades</span>
+          <span class="form-text text-danger" *ngIf="campoEsValido('existencias', 'min')">Las existencias debe ser de al menos 20 unidades</span>
+          <span class="form-text text-danger" *ngIf="campoEsValido('existencias', 'required')">Las existencias es un dato requerido</span>
         </div>
       </div>
       <!-- Botón de enviar -->
@@ -54,6 +56,12 @@
 
     <p>Touched (Ya se hizo clic en alguno de sus campos)</p>
     <pre>{{ miFormularioBasico.touched | json }}</pre>
+
+    <p>Nombre</p>
+    <pre>{{ miFormularioBasico.controls.nombre.errors | json }}</pre>
+
+    <p>Precio</p>
+    <pre>{{ miFormularioBasico.controls.precio.errors | json }}</pre>
   </div>
 </div>
 
