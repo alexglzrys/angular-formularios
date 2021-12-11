@@ -26,6 +26,7 @@ export class DinamicosComponent implements OnInit {
       {id: 2, nombre: "Mario Bros 3"}
     ]
   }
+  nuevo_juego: string = '';
 
   constructor() { }
 
@@ -38,6 +39,17 @@ export class DinamicosComponent implements OnInit {
 
   eliminar(index: number) {
     this.persona.favoritos.splice(index, 1)
+  }
+
+  agregarJuego() {
+    // Crear estructura de un nuevo Juego Favorito
+    const nuevoJuegoFavorito: Favorito = {
+      id: this.persona.favoritos.length + 1,
+      nombre: this.nuevo_juego
+    }
+
+    this.persona.favoritos.push({...nuevoJuegoFavorito})
+    this.nuevo_juego = ''
   }
 
 }

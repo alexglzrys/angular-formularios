@@ -14,13 +14,13 @@
     <label class="col-sm-3 col-form-label">Agregar</label>
     <div class="col-sm-9">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Agregar favorito">
-        <button class="btn btn-outline-primary" type="button">Agregar</button>
+        <input type="text" class="form-control" name="nuevo_juego" [(ngModel)]="nuevo_juego" placeholder="Agregar favorito">
+        <button class="btn btn-outline-primary" type="button" (click)="agregarJuego()">Agregar</button>
       </div>
     </div>
   </div>
   <!-- Lista de Juegos Favoritos -->
-  <div class="row mb-3">
+  <div class="row mb-3" *ngIf="persona.favoritos.length">
     <label class="col-sm-3 col-form-label">Favoritos</label>
     <div class="col-sm-9">
       <div *ngFor="let juego of persona.favoritos; let i = index" class="input-group mb-3">
