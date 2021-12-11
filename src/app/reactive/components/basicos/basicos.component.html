@@ -3,7 +3,7 @@
 <div class="row">
   <div class="col">
     <!-- formGroup: Permite especificar que este formulario, será gestionado por la instancia de formulario reactivo declarado en la clase del componente -->
-    <form autocomplete="off" [formGroup]="miFormularioBasico">
+    <form (ngSubmit)="guardar()"  autocomplete="off" [formGroup]="miFormularioBasico">
       <!-- Campo producto -->
       <div class="mb-3 row">
         <label class="col-sm-3 col-form-label" for="producto">Producto</label>
@@ -36,7 +36,7 @@
       <!-- Botón de enviar -->
       <div class="row mt-4">
         <div class="col">
-          <button type="submit" class="btn btn-primary float-end" [disabled]="miFormularioBasico.invalid">Registrar</button>
+          <button type="submit" class="btn btn-primary float-end">Registrar</button>
         </div>
       </div>
     </form>
