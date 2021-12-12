@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ValidationsService } from 'src/app/shared/services/validators/validations.service';
 
 @Component({
   selector: 'app-registro',
@@ -8,36 +9,21 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class RegistroComponent implements OnInit {
 
-  // Expresión regular a validar
-  nombreApellidoPattern: string = '([a-zA-Z]+) ([a-zA-Z]+)';
-  emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
 
   miFormulario: FormGroup = this.fb.group({
     // Validar campo contra validaciones de angular y contra expresiones regulares
-    nombre: ['', [Validators.required, Validators.pattern(this.nombreApellidoPattern)]],
+    nombre: ['', [Validators.required, Validators.pattern(this.validationService.nombreApellidoPattern)]],
     // Angular cuenta con un validador integrado para email, pero no es muy seguro - Validators.email
-    email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-    // Inyectar una función que nos provea de una validación personalizada
-    username: ['', [Validators.required, this.noPuedeSerRoot]]
+    email: ['', [Validators.required, Validators.pattern(this.validationService.emailPattern)]],
+    // Inyectar una función que nos provea de una validación personalizada (esta pede estar declarada a nivel de componente, un archivo de funciones exportadas, o un servicio)
+    username: ['', [Validators.required, this.validationService.noPuedeSerRoot]]
   });
 
-  constructor(private fb: FormBuilder) { }
+  // Inyectar servicio de validaciones personalizadas
+  constructor(private fb: FormBuilder,
+              private validationService: ValidationsService) { }
 
   ngOnInit(): void {
-  }
-
-  noPuedeSerRoot(control: FormControl) {
-    const currentValue: string = control.value?.trim().toLowerCase();
-    if (currentValue === 'root') {
-      // No pasa la validación, retornar un objeto con la descripción del error
-      return {
-        noRoot: true,
-        description: 'El valor no puede ser root'
-      }
-    }
-
-    // Retornar Null si la validación pasa
-    return null;
   }
 
   campoEsInvalido(nombreCampo: string): boolean | undefined {
@@ -50,7 +36,6 @@ export class RegistroComponent implements OnInit {
       this.miFormulario.markAllAsTouched()
       return;
     }
-
     console.log(this.miFormulario.value)
   }
 
