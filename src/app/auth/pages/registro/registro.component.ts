@@ -10,6 +10,28 @@ import { ValidationsService } from 'src/app/shared/services/validators/validatio
 })
 export class RegistroComponent implements OnInit {
 
+  // Getters para mostrar mensajes de error de validación personalizados en un control de formulario
+  // Estos getters se ejecutan cada vez que angular detecta un cambio en el componente, por tanto son perfectos para estar mostrando mensajes de validación en tiempo real
+  get emailErrorMsg(): string {
+    // Verificar que tipo de error se tiene actualmente en el control de email del formulario reactivo
+    const errorValidacion = this.miFormulario.get('email')?.errors;
+
+    // Se realiza una comparación tantas veces como validaciones tenga asociado el control de formulario a evaluar
+    // En este caso required, un patrón de expresión regular, y una validacion personalizada asincrona
+
+    // Es posible que el valor de la constante sea nula cuando no haya error (por eso colocamos el ?)
+    if (errorValidacion?.required) {
+      return 'El correo electrónico es un dato obligatorio';
+    } else if (errorValidacion?.pattern) {
+      return 'El correo electrónico ingresado no parece ser un dato válido';
+    } else if (errorValidacion?.emailExiste) {
+      return 'El correo electrónico ya se encuentra en uso por otro usuario';
+    }
+
+    // No hay error de validacion. Retornamos cadena vacía
+    return '';
+  }
+
 
   miFormulario: FormGroup = this.fb.group({
     // campo: valor por defecto del campo, validaciones sincronas, validaciones asincronas (http requiere un proceso adicional el cual requiere de la intervención de un servicio y la implementación de una interfaz)

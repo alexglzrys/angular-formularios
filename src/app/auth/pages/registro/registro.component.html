@@ -18,7 +18,11 @@
         <label for="" class="col-sm-3 col-form-label">Email</label>
         <div class="col-sm-9">
           <input type="email" class="form-control" formControlName="email" placeholder="Correo electrónico">
-          <span class="form-text text-danger" *ngIf="campoEsInvalido('email')">El correo electrónico es un dato requerido</span>
+          <!-- Mostrar este elemento solo si existe error de validación en el control email del formulario
+          El mensaje se muestra de formá dinámica (con un getter) con base al tipo de error sucitado en el momento
+
+          Es una excelente idea para no tener muchos elementos con mensajes condicionados que ensucian la vista-->
+          <span class="form-text text-danger" *ngIf="campoEsInvalido('email')">{{ emailErrorMsg }}</span>
         </div>
       </div>
 
