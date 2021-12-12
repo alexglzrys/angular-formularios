@@ -27,6 +27,12 @@ export class SidemenuComponent implements OnInit {
     { texto: 'Switches', url: '/reactive/switches' }
   ]
 
+  // Menú formularios Validaciones
+  authMenu: MenuI[] = [
+    { texto: 'Registro', url: '/auth/registro' },
+    { texto: 'Login', url: '/auth/login' }
+  ]
+
   constructor() { }
 
   ngOnInit(): void {

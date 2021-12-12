@@ -7,10 +7,21 @@
       routerLinkActive="active">{{ item.texto }}</li>
 </ul>
 <br class="my-5">
+
 <h2>Reactive</h2>
 <hr>
 <ul class="list-group">
   <li *ngFor="let item of reactiveMenu"
+      class="list-group-item"
+      [routerLink]="[ item.url ]"
+      routerLinkActive="active">{{ item.texto }}</li>
+</ul>
+<br class="my-5">
+
+<h2>Validaciones</h2>
+<hr>
+<ul class="list-group">
+  <li *ngFor="let item of authMenu"
       class="list-group-item"
       [routerLink]="[ item.url ]"
       routerLinkActive="active">{{ item.texto }}</li>
