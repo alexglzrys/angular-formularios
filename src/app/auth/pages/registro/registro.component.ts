@@ -15,8 +15,18 @@ export class RegistroComponent implements OnInit {
     nombre: ['', [Validators.required, Validators.pattern(this.validationService.nombreApellidoPattern)]],
     // Angular cuenta con un validador integrado para email, pero no es muy seguro - Validators.email
     email: ['', [Validators.required, Validators.pattern(this.validationService.emailPattern)]],
-    // Inyectar una función que nos provea de una validación personalizada (esta pede estar declarada a nivel de componente, un archivo de funciones exportadas, o un servicio)
-    username: ['', [Validators.required, this.validationService.noPuedeSerRoot]]
+    // Inyectar una función que nos provea de una validación personalizada
+    // Solo la referencia, no su ejecución()
+    // (esta pede estar declarada a nivel de componente, un archivo de funciones exportadas, o un servicio)
+    username: ['', [Validators.required, this.validationService.noPuedeSerRoot]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+    password_confirmation: ['', Validators.required]
+  }, {
+    // Opciones de grupo de formulario:
+    // Se pueden especificar Validaciones generales para el formulario, ya que validar contraseñas iguales, es una validación compuesta que involucra mas de un campo en particular
+    // Aqui como tenemos que pasarle los campos que se desean validar, tenemos que invocar la función. Sin embargo eso no se puede hacer en funciones de validación
+    //  por ello, en su definición retorna otra función
+    validators: [this.validationService.camposNoIguales('password', 'password_confirmation')]
   });
 
   // Inyectar servicio de validaciones personalizadas

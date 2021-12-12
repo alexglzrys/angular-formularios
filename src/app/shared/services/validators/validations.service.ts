@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormControl, ValidationErrors } from '@angular/forms';
+import { AbstractControl, FormControl, ValidationErrors } from '@angular/forms';
 
 /**
  * Servicio que agrupa PROPIEDADES Y MÉTODOS públicos de validación
@@ -31,5 +31,27 @@ export class ValidationsService {
     }
     // Retornar Null si la validación es correcta
     return null;
+  }
+
+  // Validar que dos campos sean iguales
+  camposNoIguales(campo1: string, campo2: string) {
+    // En validaciones compuestas siempre se retorna una función, que a su vez retorna un objeto de error de validación o null
+    // Esta función recibe un grupo de controles de formulario para poder insepeccionar sus valores y establecerle mensajes de error de forma manual
+    // Se retorna una función por que para pasarle los campos como argumento que se desean valdiar, se tiene que invocar la función en la sección de declaración de Validaciones
+    return (formGroup: AbstractControl): ValidationErrors | null => {
+      const pass1 = formGroup.get(campo1)?.value;
+      const pass2 = formGroup.get(campo2)?.value;
+
+      if (pass1 !== pass2) {
+        // No pasa validación.
+        // Solo colocar el mensaje de error en el campo 2 (confirmar contraseña)
+        formGroup.get(campo2)?.setErrors({ noIguales: true })
+        return { noIguales: true }
+      }
+      // La validación es correcta, retirar todo mensaje de error referente a esta validación
+      // Hay que tener cuidado, null retira todo error, inclusive de otras validaciones en este campo
+      formGroup.get(campo2)?.setErrors(null);
+      return null
+    }
   }
 }

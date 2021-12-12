@@ -35,7 +35,8 @@
       <div class="row mb-3">
         <label for="" class="col-sm-3 col-form-label">Password</label>
         <div class="col-sm-9">
-          <input type="password" class="form-control" placeholder="Contraseña de acceso">
+          <input type="password" class="form-control" formControlName="password" placeholder="Contraseña de acceso">
+          <span class="form-text text-danger" *ngIf="campoEsInvalido('password')">El contraseña es un dato requerido</span>
         </div>
       </div>
 
@@ -43,7 +44,8 @@
       <div class="row mb-3">
         <label for="" class="col-sm-3 col-form-label">Confirmar Password</label>
         <div class="col-sm-9">
-          <input type="password" class="form-control" placeholder="Confirmar contraseña de acceso">
+          <input type="password" class="form-control" formControlName="password_confirmation" placeholder="Confirmar contraseña de acceso">
+          <span class="form-text text-danger" *ngIf="campoEsInvalido('password_confirmation')">El confirmación de contraseña es incorrecta</span>
         </div>
       </div>
 
@@ -57,9 +59,16 @@
 </div>
 
 <h5>Formulario válido: {{ miFormulario.valid }}</h5>
+<h5>Formulario errors</h5>
+<!-- También es posible definir errores a nivel global de formulario, por lo general es a nivel de control -->
+<pre>{{ miFormulario.errors | json }}</pre>
 <h5>Nombre</h5>
 <pre>{{ miFormulario.controls.nombre.errors | json }}</pre>
 <h5>Email</h5>
 <pre>{{ miFormulario.controls.email.errors | json }}</pre>
 <h5>Username</h5>
 <pre>{{ miFormulario.controls.username.errors | json }}</pre>
+<h5>Password</h5>
+<pre>{{ miFormulario.controls.password.errors | json }}</pre>
+<h5>Password Confirmation</h5>
+<pre>{{ miFormulario.controls.password_confirmation.errors | json }}</pre>
