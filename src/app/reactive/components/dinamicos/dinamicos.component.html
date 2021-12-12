@@ -5,6 +5,7 @@
   <div class="row mb-3">
     <label class="col-sm-3 col-form-label">Nombre</label>
     <div class="col-sm-9">
+      <!-- formControlName, hacer referencia a un control que forma parte del grupo de controles declarados en el formulario reactivo -->
       <input type="text" class="form-control" formControlName="nombre" placeholder="Nombre de la persona">
       <span class="form-text text-danger" *ngIf="campoEsValido('nombre', 'required')">El nombre de la persona es obligatorio</span>
       <span class="form-text text-danger" *ngIf="campoEsValido('nombre', 'minlength')">El nombre de la persona debe ser de al menos 3 caracteres</span>
@@ -15,8 +16,13 @@
     <label class="col-sm-3 col-form-label">Agregar</label>
     <div class="col-sm-9" >
       <div class="input-group mb-3" >
-        <input type="text" class="form-control" placeholder="Agregar favorito">
-        <button class="btn btn-outline-primary" type="button">Agregar</button>
+        <!-- Hasta el momento ya conocemos tres formas para hacer referencia a un elemento de formulario
+        #template (viewChild. Compatible con ambos tipos de formularios en Angular),
+        ngModel (requiere el ngForm, el cual no es compatible con formularios reactivos, solo basados en template),
+        formControl (compatible con formularios reactivos) -->
+        <!-- formControl: hace referencia a un control de formularo reactivo independiente (que no forma parte de un formGroup) -->
+        <input type="text" class="form-control" [formControl]="nuevoFavorito" placeholder="Agregar favorito">
+        <button class="btn btn-outline-primary" type="button" (click)="agregarFavorito()">Agregar</button>
       </div>
     </div>
   </div>
@@ -42,4 +48,5 @@
 </form>
 <pre>Valid: {{ miFormulario.valid }}</pre>
 <pre>{{ miFormulario.value | json}}</pre>
+<pre>Favorito: {{ nuevoFavorito.value }}</pre>
 

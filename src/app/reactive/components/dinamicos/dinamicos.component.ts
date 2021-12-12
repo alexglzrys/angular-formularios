@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-dinamicos',
@@ -22,6 +22,9 @@ export class DinamicosComponent implements OnInit {
     ])
   })
 
+  // Un nuevo control de formulario reactivo independiente (no forma parte de un formGroup)
+  nuevoFavorito: FormControl = this.fb.control('', Validators.required);
+
   // getter para obtener el conjunto (arreglo) de controles reactivos que hacen referencia al path de favoritos
   get favoritosArr(): FormArray {
     return this.miFormulario.get('favoritos') as FormArray;
@@ -34,6 +37,21 @@ export class DinamicosComponent implements OnInit {
 
   campoEsValido(campo: string, typeValidation: string): boolean {
     return this.miFormulario.controls[campo].errors?.[typeValidation] && this.miFormulario.controls[campo].touched;
+  }
+
+  agregarFavorito() {
+    if (this.nuevoFavorito.invalid) return;
+
+    // Agregar un nuevo favorito al arreglo de controles de formulario reactivo
+    // Para eso nos valemos del getter que nos retorna el formArray
+
+    // Mediante un FormControl
+    //this.favoritosArr.push(new FormControl(this.nuevoFavorito.value, Validators.required))
+
+    // Mediante el servicio de FormBuilder (el cual puede crear un control)
+    this.favoritosArr.push(this.fb.control(this.nuevoFavorito.value, Validators.required))
+
+    this.nuevoFavorito.reset()
   }
 
   guardar() {
