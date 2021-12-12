@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { EmailValidatorService } from 'src/app/shared/services/validators/email-validator.service';
 import { ValidationsService } from 'src/app/shared/services/validators/validations.service';
 
 @Component({
@@ -11,10 +12,13 @@ export class RegistroComponent implements OnInit {
 
 
   miFormulario: FormGroup = this.fb.group({
+    // campo: valor por defecto del campo, validaciones sincronas, validaciones asincronas (http requiere un proceso adicional el cual requiere de la intervención de un servicio y la implementación de una interfaz)
+
     // Validar campo contra validaciones de angular y contra expresiones regulares
     nombre: ['', [Validators.required, Validators.pattern(this.validationService.nombreApellidoPattern)]],
     // Angular cuenta con un validador integrado para email, pero no es muy seguro - Validators.email
-    email: ['', [Validators.required, Validators.pattern(this.validationService.emailPattern)]],
+    // Declarar el servicio (tercer argumento) que se encargará de realizar la validación http asincrona para verificar que el email no existe en el server
+    email: ['', [Validators.required, Validators.pattern(this.validationService.emailPattern)], [this.emailValidator]],
     // Inyectar una función que nos provea de una validación personalizada
     // Solo la referencia, no su ejecución()
     // (esta pede estar declarada a nivel de componente, un archivo de funciones exportadas, o un servicio)
@@ -30,8 +34,10 @@ export class RegistroComponent implements OnInit {
   });
 
   // Inyectar servicio de validaciones personalizadas
+  // Inyectar servicios de validaciones asincronas personalizadas que requieren http
   constructor(private fb: FormBuilder,
-              private validationService: ValidationsService) { }
+              private validationService: ValidationsService,
+              private emailValidator: EmailValidatorService) { }
 
   ngOnInit(): void {
   }
