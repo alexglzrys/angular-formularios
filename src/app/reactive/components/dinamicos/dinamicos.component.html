@@ -1,19 +1,20 @@
 <h2>Reactive: <small>Dinámicos</small></h2>
 <hr>
-<form autocomplete="off">
+<form (ngSubmit)="guardar()" [formGroup]="miFormulario" autocomplete="off">
   <!-- Nombre -->
   <div class="row mb-3">
     <label class="col-sm-3 col-form-label">Nombre</label>
     <div class="col-sm-9">
-      <input type="text" class="form-control" placeholder="Nombre de la persona">
-      <span class="form-text text-danger">Este campo es obligatorio</span>
+      <input type="text" class="form-control" formControlName="nombre" placeholder="Nombre de la persona">
+      <span class="form-text text-danger" *ngIf="campoEsValido('nombre', 'required')">El nombre de la persona es obligatorio</span>
+      <span class="form-text text-danger" *ngIf="campoEsValido('nombre', 'minlength')">El nombre de la persona debe ser de al menos 3 caracteres</span>
     </div>
   </div>
   <!-- Agregar -->
   <div class="row mb-3">
     <label class="col-sm-3 col-form-label">Agregar</label>
-    <div class="col-sm-9">
-      <div class="input-group mb-3">
+    <div class="col-sm-9" >
+      <div class="input-group mb-3" >
         <input type="text" class="form-control" placeholder="Agregar favorito">
         <button class="btn btn-outline-primary" type="button">Agregar</button>
       </div>
@@ -22,9 +23,12 @@
   <!-- Lista de Juegos Favoritos -->
   <div class="row mb-3">
     <label class="col-sm-3 col-form-label">Favoritos</label>
-    <div class="col-sm-9">
-      <div class="input-group mb-3">
-        <input type="text" class="form-control">
+    <!-- Especificar que se asociará un arreglo de controles reactivos -->
+    <div class="col-sm-9" formArrayName="favoritos">
+      <!-- Iterar por el array de los controles reactivos establecidos en el formulario -->
+      <div class="input-group mb-3" *ngFor="let favorito of favoritosArr.controls; let i = index">
+        <!-- Para asociar el valor es necesario especificar el indice del elemento en cuestion al formControlName  -->
+        <input type="text" class="form-control" [formControlName]="i">
         <button class="btn btn-outline-danger" type="button">Eliminar</button>
       </div>
     </div>
@@ -32,9 +36,10 @@
   <!-- Botón enviar -->
   <div class="row">
     <div class="col-sm-12">
-      <button class="btn btn-primary float-end" type="button">Guardar</button>
+      <button class="btn btn-primary float-end" type="submit">Guardar</button>
     </div>
   </div>
 </form>
-<!-- <pre>{{ persona | json}}</pre> -->
+<pre>Valid: {{ miFormulario.valid }}</pre>
+<pre>{{ miFormulario.value | json}}</pre>
 

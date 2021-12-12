@@ -48,3 +48,4 @@ La mayor parte de la lógica o configuración se encuentra declarada en el Templ
 - Toda la lógica reside en el lado de TypeScript (Clase del componente)
 - Permiten gestionar formularios complejos, puesto que se tiene el control del lado del código
 - Se requiere importar el módulo de **ReactiveFormsModule**
+- Se requiere inyectar el servicio **FormBuilder** para estructuras de formulario complejas
