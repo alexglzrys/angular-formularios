@@ -21,13 +21,13 @@
         ngModel (requiere el ngForm, el cual no es compatible con formularios reactivos, solo basados en template),
         formControl (compatible con formularios reactivos) -->
         <!-- formControl: hace referencia a un control de formularo reactivo independiente (que no forma parte de un formGroup) -->
-        <input type="text" class="form-control" [formControl]="nuevoFavorito" placeholder="Agregar favorito">
+        <input type="text" class="form-control" [formControl]="nuevoFavorito" placeholder="Agregar favorito" (keyup.enter)="agregarFavorito()">
         <button class="btn btn-outline-primary" type="button" (click)="agregarFavorito()">Agregar</button>
       </div>
     </div>
   </div>
   <!-- Lista de Juegos Favoritos -->
-  <div class="row mb-3">
+  <div class="row mb-3" *ngIf="favoritosArr.length">
     <label class="col-sm-3 col-form-label">Favoritos</label>
     <!-- Especificar que se asociará un arreglo de controles reactivos -->
     <div class="col-sm-9" formArrayName="favoritos">
@@ -35,14 +35,14 @@
       <div class="input-group mb-3" *ngFor="let favorito of favoritosArr.controls; let i = index">
         <!-- Para asociar el valor es necesario especificar el indice del elemento en cuestion al formControlName  -->
         <input type="text" class="form-control" [formControlName]="i">
-        <button class="btn btn-outline-danger" type="button">Eliminar</button>
+        <button class="btn btn-outline-danger" type="button" (click)="eliminarFavorito(i)">Eliminar</button>
       </div>
     </div>
   </div>
   <!-- Botón enviar -->
   <div class="row">
     <div class="col-sm-12">
-      <button class="btn btn-primary float-end" type="submit">Guardar</button>
+      <button class="btn btn-primary float-end" type="button" (click)="guardar()">Guardar</button>
     </div>
   </div>
 </form>

@@ -19,7 +19,7 @@ export class DinamicosComponent implements OnInit {
       ['Metal Slug', Validators.required],
       ['Super Tux'],
       ['Super Mario Bros 3']
-    ])
+    ], Validators.required)   // Estamos indicando que este arreglo de controles es requerido (debe existir al menos uno)
   })
 
   // Un nuevo control de formulario reactivo independiente (no forma parte de un formGroup)
@@ -54,6 +54,12 @@ export class DinamicosComponent implements OnInit {
     this.nuevoFavorito.reset()
   }
 
+  eliminarFavorito(i: number) {
+    console.log(i)
+    // Remover el control de formulario reactivo situado en el indice especificado
+    this.favoritosArr.removeAt(i)
+  }
+
   guardar() {
     if (this.miFormulario.invalid) {
       this.miFormulario.markAllAsTouched();
@@ -62,6 +68,8 @@ export class DinamicosComponent implements OnInit {
 
     console.log(this.miFormulario.value)
     this.miFormulario.reset()
+    // Limpiar (vaciar) todo el arreglo de controles de formulario reactivo
+    this.favoritosArr.clear()
   }
 
 }
