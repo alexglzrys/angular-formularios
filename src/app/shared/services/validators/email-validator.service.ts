@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AbstractControl, AsyncValidator, ValidationErrors } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { map } from "rxjs/operators";
+import { delay, map } from "rxjs/operators";
 
 const API_URL = 'http://localhost:3000';
 
@@ -35,6 +35,8 @@ export class EmailValidatorService implements AsyncValidator {
 
 
     return this.http.get<any[]>(`${API_URL}/usuarios?q=${email}`).pipe(
+      // Simular un retraso de respuesta del servidor.
+      delay(3000),
       map(res => {
         // La respuesta en este caso es un arreglo, si esta vacío, el emil no existe (pasa validación), caso contrario, email existe (no se puede usar ese email, validación no pasa)
         return res.length ? { emailExiste: true } : null;

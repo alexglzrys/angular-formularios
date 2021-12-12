@@ -51,13 +51,23 @@
 
       <div class="row">
         <div class="col-sm-12">
-          <button class="btn btn-primary float-end" type="submit">Registrar</button>
+          <!-- Podemos deshabilitar el botón de envío mientras el estado de formularo este pendiente de validación
+
+            Esto es importante ya que podemos tener validaciones asincronas donde el server tarde en responder
+            Un formulario puede tener 3 estados: VÁLIDO, INVÁLIDO, PENDIENTE DE VALIDACIÓN
+
+          Ya que nos interesa enviar el posteo aunque la data este incorrecta para que nos muestre todos los mensajes de validación
+        en aquellos campos que tienen información invalida -->
+          <button class="btn btn-primary float-end" [disabled]="miFormulario.pending" type="submit">Registrar</button>
         </div>
       </div>
     </form>
   </div>
 </div>
 
+<!-- El estado de formulario puede estar en: valido, inválido, pendiente de validación -->
+<h5>Estado del Formulario: {{ miFormulario.status }}</h5>
+<p>Formularo pendiente de validación?: <mark>{{ miFormulario.pending }}</mark></p>
 <h5>Formulario válido: {{ miFormulario.valid }}</h5>
 <h5>Formulario errors</h5>
 <!-- También es posible definir errores a nivel global de formulario, por lo general es a nivel de control -->
