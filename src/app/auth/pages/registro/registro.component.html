@@ -3,13 +3,13 @@
 
 <div class="row">
   <div class="col">
-    <form autocomplete="off">
+    <form (ngSubmit)="registrar()" [formGroup]="miFormulario" autocomplete="off">
       <!-- Nombre -->
       <div class="row mb-3">
         <label for="" class="col-sm-3 col-form-label">Nombre</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" placeholder="Nombre de usuario">
-          <span class="form-text text-danger">Debe ser en formato de nombre y apellido</span>
+          <input type="text" class="form-control" formControlName="nombre" placeholder="Nombre de usuario">
+          <span class="form-text text-danger" *ngIf="campoEsInvalido('nombre')">Debe ser en formato de nombre y apellido</span>
         </div>
       </div>
 
@@ -53,3 +53,7 @@
     </form>
   </div>
 </div>
+
+<h5>Formulario válido: {{ miFormulario.valid }}</h5>
+<h5>Nombre</h5>
+<pre>{{ miFormulario.controls.nombre.errors | json }}</pre>
