@@ -10,10 +10,13 @@ export class RegistroComponent implements OnInit {
 
   // Expresión regular a validar
   nombreApellidoPattern: string = '([a-zA-Z]+) ([a-zA-Z]+)';
+  emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
 
   miFormulario: FormGroup = this.fb.group({
     // Validar campo contra validaciones de angular y contra expresiones regulares
-    nombre: ['', [Validators.required, Validators.pattern(this.nombreApellidoPattern)]]
+    nombre: ['', [Validators.required, Validators.pattern(this.nombreApellidoPattern)]],
+    // Angular cuenta con un validador integrado para email, pero no es muy seguro - Validators.email
+    email: ['', [Validators.required, Validators.pattern(this.emailPattern)]]
   });
 
   constructor(private fb: FormBuilder) { }
