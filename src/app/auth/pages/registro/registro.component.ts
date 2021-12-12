@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-registro',
@@ -16,12 +16,28 @@ export class RegistroComponent implements OnInit {
     // Validar campo contra validaciones de angular y contra expresiones regulares
     nombre: ['', [Validators.required, Validators.pattern(this.nombreApellidoPattern)]],
     // Angular cuenta con un validador integrado para email, pero no es muy seguro - Validators.email
-    email: ['', [Validators.required, Validators.pattern(this.emailPattern)]]
+    email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+    // Inyectar una función que nos provea de una validación personalizada
+    username: ['', [Validators.required, this.noPuedeSerRoot]]
   });
 
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
+  }
+
+  noPuedeSerRoot(control: FormControl) {
+    const currentValue: string = control.value?.trim().toLowerCase();
+    if (currentValue === 'root') {
+      // No pasa la validación, retornar un objeto con la descripción del error
+      return {
+        noRoot: true,
+        description: 'El valor no puede ser root'
+      }
+    }
+
+    // Retornar Null si la validación pasa
+    return null;
   }
 
   campoEsInvalido(nombreCampo: string): boolean | undefined {

@@ -26,7 +26,8 @@
       <div class="row mb-3">
         <label for="" class="col-sm-3 col-form-label">Username</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" placeholder="Username del usuario">
+          <input type="text" class="form-control" formControlName="username" placeholder="Username del usuario">
+          <span class="form-text text-danger" *ngIf="campoEsInvalido('username')">El username no puede ser <strong>root</strong></span>
         </div>
       </div>
 
@@ -60,3 +61,5 @@
 <pre>{{ miFormulario.controls.nombre.errors | json }}</pre>
 <h5>Email</h5>
 <pre>{{ miFormulario.controls.email.errors | json }}</pre>
+<h5>Username</h5>
+<pre>{{ miFormulario.controls.username.errors | json }}</pre>
