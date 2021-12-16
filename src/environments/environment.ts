@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url_paises: 'https://restcountries.com/v3.1',
+  url_paises: 'https://restcountries.com/v2',
 };
 
 /*

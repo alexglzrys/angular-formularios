@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { switchMap, tap } from 'rxjs/operators';
-import { PaisSmall } from '../../interfaces/pais-small';
+import { Pais, PaisSmall } from '../../interfaces/pais-small';
 import { PaisesService } from '../../services/paises/paises.service';
 
 @Component({
@@ -13,11 +13,13 @@ export class SelectorPageComponent implements OnInit {
 
   miFormulario: FormGroup = this.fb.group({
     region: ['', Validators.required],
-    pais: ['', Validators.required]
+    pais: ['', Validators.required],
+    fronteras: ['', Validators.required]
   })
 
   regiones!: string[];
   paises!: PaisSmall[];
+  fronteras!: string[];
 
   constructor(private fb: FormBuilder,
               private paisesServices: PaisesService) { }
@@ -48,6 +50,21 @@ export class SelectorPageComponent implements OnInit {
       switchMap(nuevaRegion => this.paisesServices.getPaisesPorRegion(nuevaRegion))
     ).subscribe(paises => {
       this.paises = paises;
+    });
+
+
+    // Suscripción a cambios en el select de Pais
+    this.miFormulario.get('pais')?.valueChanges.pipe(
+      tap(( _ ) => {
+        // Si el país cambia, limpiar el select de fronteras, y resetear mi arreglo de fronteras
+        this.miFormulario.get('fronteras')?.reset('')
+        this.fronteras = [];
+      }),
+      switchMap(nuevoCodigoPais => this.paisesServices.getPaisPorCodigo(nuevoCodigoPais))
+    ).subscribe(pais => {
+      // No me interesa toda la información del país, solo sus posibles fronteras para mostrarlas en el select.
+      this.fronteras = pais?.borders || [];
+      console.log(pais)
     })
   }
 
