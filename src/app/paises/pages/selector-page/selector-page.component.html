@@ -1,8 +1,9 @@
-<h2 class="mt-5">Selectores Anidados</h2>
-<hr>
+<h2>Selectores Anidados</h2>
+<hr class="mb-5">
 
 <form (ngSubmit)="guardar()" [formGroup]="miFormulario">
-  <div class="row">
+  <!-- Continente -->
+  <div class="row mb-4">
     <div class="col">
       <label for="continente" class="form-label">Continente</label>
       <select id="continente" class="form-control" formControlName="region">
@@ -11,7 +12,8 @@
       </select>
     </div>
   </div>
-  <div class="row">
+  <!-- País -->
+  <div class="row mb-4" *ngIf="paises?.length">
     <div class="col">
       <label for="continente" class="form-label">País</label>
       <select id="continente" class="form-control" formControlName="pais">
@@ -20,9 +22,10 @@
       </select>
     </div>
   </div>
-  <div class="row">
+  <!-- Frontera -->
+  <div class="row mb-4" *ngIf="fronteras?.length">
     <div class="col">
-      <label for="continente" class="form-label">País</label>
+      <label for="continente" class="form-label">Frontera</label>
       <select id="continente" class="form-control" formControlName="fronteras">
         <option value="" selected disabled>-- Seleccione el país fronterizo --</option>
         <option *ngFor="let frontera of fronteras" [value]="frontera">{{ frontera }}</option>
@@ -36,7 +39,11 @@
   </div>
 </form>
 
-<h4 class="my-5">Estado del Formulario</h4>
+<!-- Indicador de carga -->
+<div class="row my-3" *ngIf="loading">
+  <div class="alert alert-primary">Cargando...</div>
+</div>
 
+<h4 class="my-5">Estado del Formulario</h4>
 <pre>Válido: {{ miFormulario.valid }}</pre>
 <pre>{{ miFormulario.value | json }}</pre>

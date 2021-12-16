@@ -21,10 +21,13 @@ export class SelectorPageComponent implements OnInit {
   paises!: PaisSmall[];
   fronteras!: string[];
 
+  loading: boolean = false;
+
   constructor(private fb: FormBuilder,
               private paisesServices: PaisesService) { }
 
   ngOnInit(): void {
+    console.log(this.paises)
     // Obtener el listado de regiones (continentes)
     this.regiones = this.paisesServices.regiones;
 
@@ -45,11 +48,15 @@ export class SelectorPageComponent implements OnInit {
         // ( _ ), nomenclatura para indicar que no me interesa lo que venga en flujo de información en este momento
         // Limpiar el valor del select hijo, si el select padre cambia
         this.miFormulario.get('pais')?.reset('');
+        // Mostrar loadiong
+        this.loading = true;
       }),
       // Encadenar suscripciones, evita el suscription hall
       switchMap(nuevaRegion => this.paisesServices.getPaisesPorRegion(nuevaRegion))
     ).subscribe(paises => {
       this.paises = paises;
+      // ocultar loading
+      this.loading = false;
     });
 
 
@@ -59,12 +66,23 @@ export class SelectorPageComponent implements OnInit {
         // Si el país cambia, limpiar el select de fronteras, y resetear mi arreglo de fronteras
         this.miFormulario.get('fronteras')?.reset('')
         this.fronteras = [];
+        this.loading = true;
       }),
       switchMap(nuevoCodigoPais => this.paisesServices.getPaisPorCodigo(nuevoCodigoPais))
     ).subscribe(pais => {
       // No me interesa toda la información del país, solo sus posibles fronteras para mostrarlas en el select.
       this.fronteras = pais?.borders || [];
-      console.log(pais)
+
+      console.log(this.fronteras)
+
+      // Si no hay frontera, para pasar la validación, establezco un valor
+      if (pais !== null && this.fronteras.length === 0) {
+
+        this.miFormulario.get('fronteras')?.reset('Sin Fronteras')
+      }
+
+      this.loading = false;
+      //console.log(pais)
     })
   }
 
