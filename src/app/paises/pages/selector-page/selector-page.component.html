@@ -1,1 +1,23 @@
-<p>selector-page works!</p>
+<h2 class="mt-5">Selectores Anidados</h2>
+<hr>
+
+<form (ngSubmit)="guardar()" [formGroup]="miFormulario">
+  <div class="row">
+    <div class="col">
+      <label for="continente" class="form-label">Continente</label>
+      <select id="continente" class="form-control" formControlName="region">
+        <option value="" selected disabled>-- Seleccione Continente --</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-primary float-end" type="submit">Seleccionar</button>
+    </div>
+  </div>
+</form>
+
+<h4 class="my-5">Estado del Formulario</h4>
+
+<pre>Válido: {{ miFormulario.valid }}</pre>
+<pre>{{ miFormulario.value | json }}</pre>
