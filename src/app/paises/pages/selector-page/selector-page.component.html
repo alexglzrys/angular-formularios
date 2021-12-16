@@ -7,6 +7,7 @@
       <label for="continente" class="form-label">Continente</label>
       <select id="continente" class="form-control" formControlName="region">
         <option value="" selected disabled>-- Seleccione Continente --</option>
+        <option *ngFor="let region of regiones" [value]="region | lowercase" >{{ region}}</option>
       </select>
     </div>
   </div>
