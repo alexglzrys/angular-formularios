@@ -19,7 +19,7 @@ export class SelectorPageComponent implements OnInit {
 
   regiones!: string[];
   paises!: PaisSmall[];
-  fronteras!: string[];
+  fronteras!: PaisSmall[];
 
   loading: boolean = false;
 
@@ -68,21 +68,22 @@ export class SelectorPageComponent implements OnInit {
         this.fronteras = [];
         this.loading = true;
       }),
-      switchMap(nuevoCodigoPais => this.paisesServices.getPaisPorCodigo(nuevoCodigoPais))
-    ).subscribe(pais => {
+      // Recibo el nuevo codigo de pais, y se lo paso al service para buscar los detalles del pais seleccionado
+      switchMap(nuevoCodigoPais => this.paisesServices.getPaisPorCodigo(nuevoCodigoPais)),
+      // Recibo los detalles del pais, y le paso las fronteras nuevamente al service para obtener sus nombres de pais completo
+      switchMap(pais => this.paisesServices.getNombrePaisesPorCodigos(pais?.borders!))
+      // Finalmente me suscribo y lo que obtnengo al final es un listado de fronteras (con nombres de pais completo, codigo y capital)
+    ).subscribe(fronteras => {
       // No me interesa toda la información del país, solo sus posibles fronteras para mostrarlas en el select.
-      this.fronteras = pais?.borders || [];
-
-      console.log(this.fronteras)
+      //this.fronteras = pais?.borders || [];
+      this.fronteras = fronteras;
 
       // Si no hay frontera, para pasar la validación, establezco un valor
-      if (pais !== null && this.fronteras.length === 0) {
-
+      if (fronteras !== null && fronteras.length === 0) {
         this.miFormulario.get('fronteras')?.reset('Sin Fronteras')
       }
 
       this.loading = false;
-      //console.log(pais)
     })
   }
 

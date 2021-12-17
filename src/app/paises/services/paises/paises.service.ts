@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { combineLatest, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Pais, PaisSmall } from '../../interfaces/pais-small';
 
@@ -31,5 +31,29 @@ export class PaisesService {
     if (!codigo) return of(null);
 
     return this.http.get<Pais>(`${API_URL}/alpha/${codigo}`);
+  }
+
+  // Solo regreso los datos de un pais con base a su código
+  getPaisPorCodigoSmall(codigo: string): Observable<PaisSmall> {
+    return this.http.get<PaisSmall>(`${API_URL}/alpha/${codigo}?fields=name,capital,alpha3Code`);
+  }
+
+  // De un conjunto de fronteras (codigos de paises), retorno un arreglo con información más detallada del pais
+  getNombrePaisesPorCodigos(fronteras: string[]): Observable<PaisSmall[]> {
+    // Si no hay fronteras, retorno un arreglo vacio
+    if (!fronteras) return of([]);
+
+    //
+    const peticionesHttp: Observable<PaisSmall>[] = []
+
+    // por cada frontera, hago una petición http, y la respuesta (onservable) lo almaceno en un arreglo
+    fronteras.forEach(codigo => {
+      const peticion = this.getPaisPorCodigoSmall(codigo)
+      peticionesHttp.push(peticion);
+    })
+
+    // agrupar y resolver de forma sincrona un conjunto de observables.
+    // En este caso retornaría un Observable de arreglo de PaisSmall
+    return combineLatest(peticionesHttp);
   }
 }
